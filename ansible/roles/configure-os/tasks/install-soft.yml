@@ -25,3 +25,9 @@
       - rsync
     state: latest
     update_cache: yes
+
+- name: CLEAN SOFT TASK
+  apt:
+    autoremove: yes
+    clean: yes
+    autoclean: yes

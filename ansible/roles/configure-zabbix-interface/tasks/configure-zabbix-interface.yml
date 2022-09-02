@@ -16,6 +16,8 @@
       - "Linux by Zabbix agent"
       - "ICMP Ping"
       - "SSH Service"
+      - "Docker by Zabbix agent 2"
+      - "HTTPS Service"
     status: enabled
     state: present
     interfaces:
@@ -115,6 +117,7 @@
       - "Linux by Zabbix agent"
       - "ICMP Ping"
       - "SSH Service"
+      - "Docker by Zabbix agent 2"
     status: enabled
     state: present
     interfaces:
