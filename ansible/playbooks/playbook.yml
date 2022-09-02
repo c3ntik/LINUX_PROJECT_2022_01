@@ -1,0 +1,140 @@
+---
+### TERRAFORM CONFIGURE ###
+- name: TERRAFORM
+  hosts: localhost
+  gather_facts: false
+
+  roles:
+    - configure-terraform
+
+### SERVERS CONFIGURE ###
+- name: CONFIGURE SERVERS
+  hosts: all
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-os
+
+### VPN CONFIGURE ###
+- name: DEPLOY VPN
+  hosts: vpn-host
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-vpn
+
+### LOG CONFIGURE ###
+- name: DEPLOY LOG
+  hosts: log-host
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-hdd
+    - configure-rsyslog-server
+
+### RSYSLOG CLIENT CONFIGURE ###
+- name: CONFIGURE RSYSLOG CLIENT
+  hosts:
+    - mon-host
+    - sql01-host
+    - sql02-host
+    - web-host
+    - gate-host
+    - backup-host
+  become: true
+  gather_facts: false
+  roles:
+    - configure-rsyslog-client
+
+### ZABBIX AGENT CONFIGURE ###
+- name: CONFIGURE ZABBIX AGENT
+  hosts: 
+    - log-host
+    - mon-host
+    - sql01-host
+    - sql02-host
+    - web-host
+    - gate-host
+    - backup-host
+  become: true
+  gather_facts: false
+  roles:
+    - configure-zabbix-agent
+
+### MON CONFIGURE ###
+- name: DEPLOY MON
+  hosts: mon-host
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-postgresql-all
+    - configure-zabbix-server
+
+### SQL01 CONFIGURE ###
+- name: DEPLOY SQL01
+  hosts: sql01-host
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-postgresql-all
+    - configure-postgresql-master
+    - configure-postgresql-wiki-db
+
+### SQL02 CONFIGURE ###
+- name: DEPLOY SQL02
+  hosts: sql02-host
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-postgresql-all
+    - configure-postgresql-slave
+
+### WEB CONFIGURE ###
+- name: DEPLOY WEB
+  hosts: web-host
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-docker
+    - configure-docker-wiki
+    - configure-docker-portainer
+    - configure-phppgadmin
+    - configure-rsync-web-host
+
+### GATE CONFIGURE ###
+- name: DEPLOY GATE
+  hosts: gate-host
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-docker
+    - configure-docker-nginx
+
+### BACKUP CONFIGURE ###
+- name: DEPLOY BACKUP
+  hosts: backup-host
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-hdd
+    - configure-psql-client-backup-host
+    - configure-basebackup-backup-host
+    - configure-rsync-backup-host
+
+### MON CONFIGURE ###
+- name: CONFIGURE ZABBIX INTEFRACE MON
+  hosts: mon-host
+  become: true
+  gather_facts: false
+
+  roles:
+    - configure-zabbix-interface

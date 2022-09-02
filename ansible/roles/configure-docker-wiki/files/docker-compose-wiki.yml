@@ -1,0 +1,15 @@
+version: "3"
+services:
+  wiki:
+    container_name: wiki.js
+    image: ghcr.io/requarks/wiki:2
+    ports:
+      - '8080:3000'
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: 10.10.10.61
+      DB_PORT: 5432
+      DB_USER: wiki
+      DB_PASS: wiki
+      DB_NAME: wiki
+    restart: unless-stopped

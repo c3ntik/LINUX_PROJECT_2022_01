@@ -1,0 +1,21 @@
+---
+- name:  ENABLE RSYNC IN CONFIG TASK
+  lineinfile:
+    dest: /etc/default/rsync
+    state: present
+    regexp: '^RSYNC_ENABLE=false'
+    line: "RSYNC_ENABLE=true"
+
+- name: COPY RSYNC.CONF TASK
+  copy:
+    src: ./files/rsyncd.conf
+    dest: /etc/rsyncd.conf
+    mode: '0644'
+    owner: root
+    group: root
+
+- name: RESTART RSYNC TASK
+  service:
+    name: rsync
+    enabled: yes
+    state: restarted

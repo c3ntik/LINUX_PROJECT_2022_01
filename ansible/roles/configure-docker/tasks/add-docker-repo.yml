@@ -1,0 +1,20 @@
+---
+  - name: ADD DOCKER OFFICIAL GPG KEY TASK
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: VERIFY GPG KEY TASK
+    apt_key:
+      id: 0EBFCD88
+      state: present
+  
+  - name: ADD STABLE DOCKER REPO TASK
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ os_name }} stable
+      state: present
+      update_cache: yes
+
+  - name: UPDATE PACKAGES TASK
+    apt:
+      update_cache: true

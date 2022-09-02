@@ -1,0 +1,11 @@
+---
+- name: COPY PORTAINER COMPOSE FILE TASK
+  copy:
+    src: files/docker-compose-portainer.yml
+    dest: /opt/docker/docker-portainer/docker-compose.yml
+
+- name: DEPLOY PORTAINER-DOCKER TASK
+  docker_compose:
+    project_src: /opt/docker/docker-portainer
+
+

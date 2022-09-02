@@ -1,0 +1,25 @@
+---
+- name: WAIT 30 SEC TASK
+  wait_for:
+    timeout: 30
+
+- name: CREATE HOSTS GROUP ZABBIX TASK
+  local_action:
+    module: community.zabbix.zabbix_group
+    server_url: http://{{ ansible_host }}:8080
+    login_user: "{{ zabbix_web_user }}"
+    login_password: "{{ zabbix_web_password }}"
+    state: present
+    host_groups:
+      - LINUX_HOSTS
+  become: false
+
+- name: DELETE ZABBIX SERVER HOST TASK
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://{{ ansible_host }}:8080
+    login_user: "{{ zabbix_web_user }}"
+    login_password: "{{ zabbix_web_password }}"
+    host_name: Zabbix server
+    state: absent
+  become: false 

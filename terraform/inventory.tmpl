@@ -1,0 +1,37 @@
+[vpn_hosts]
+%{ for ip in server_ip_vpn ~}
+vpn-host ansible_host=${ip}
+%{ endfor ~}
+
+[gate_hosts]
+%{ for ip in server_ip_gate ~}
+gate-host ansible_host=${ip}
+%{ endfor ~}
+
+[mon_hosts]
+%{ for ip in server_ip_mon ~}
+mon-host ansible_host=${ip}
+%{ endfor ~}
+
+[web_hosts]
+%{ for ip in server_ip_web ~}
+web-host ansible_host=${ip}
+%{ endfor ~}
+
+[log_hosts]
+%{ for ip in server_ip_log ~}
+log-host ansible_host=${ip}
+%{ endfor ~}
+
+[backup_hosts]
+%{ for ip in server_ip_backup ~}
+backup-host ansible_host=${ip}
+%{ endfor ~}
+
+[sql_hosts]
+%{ for ip in server_ip_sql01 ~}
+sql01-host ansible_host=${ip}
+%{ endfor ~}
+%{ for ip in server_ip_sql02 ~}
+sql02-host ansible_host=${ip}
+%{ endfor ~}

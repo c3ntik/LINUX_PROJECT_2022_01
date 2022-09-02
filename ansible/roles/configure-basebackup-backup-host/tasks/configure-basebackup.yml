@@ -1,0 +1,32 @@
+- name: COPY PG_BASEBACKUP-WEB-HOST.sh TASK
+  copy:
+    src: ./files/PG_BASEBACKUP-WEB-HOST.sh
+    dest: /usr/local/bin/PG_BASEBACKUP-WEB-HOST.sh
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: COPY PG_BASEBACKUP-MON-HOST.sh TASK
+  copy:
+    src: ./files/PG_BASEBACKUP-MON-HOST.sh
+    dest: /usr/local/bin/PG_BASEBACKUP-MON-HOST.sh
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: CRON BACKUP WEB TASK
+  lineinfile:
+    path: /etc/crontab
+    state: present
+    line: '*/30 *	* * *	root	sh /usr/local/bin/PG_BASEBACKUP-WEB-HOST.sh'
+
+- name: CRON BACKUP SQL TASK
+  lineinfile:
+    path: /etc/crontab
+    state: present
+    line: '*/30 *	* * *	root	sh /usr/local/bin/PG_BASEBACKUP-MON-HOST.sh'
+
+- name: RESTART CRON TASK
+  service:
+    name: cron
+    state: restarted

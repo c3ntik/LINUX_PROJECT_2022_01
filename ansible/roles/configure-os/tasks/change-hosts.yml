@@ -1,0 +1,13 @@
+---
+- name: CHANGE HOSTS FILE TASK
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      10.10.10.5 vpn
+      10.10.10.10 gate
+      10.10.10.20 mon
+      10.10.10.30 log
+      10.10.10.40 backup
+      10.10.10.50 web
+      10.10.10.61 sql01
+      10.10.10.62 sql02

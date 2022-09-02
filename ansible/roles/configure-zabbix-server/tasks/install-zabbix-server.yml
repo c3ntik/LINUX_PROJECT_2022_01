@@ -1,0 +1,11 @@
+---
+- name: INSTALL ZABBIX-SERVER TASK
+  apt:
+    pkg:
+    - zabbix-server-pgsql
+    - zabbix-frontend-php
+#    - php7.4-pgsql
+    - php8.1-pgsql
+    - zabbix-nginx-conf
+    - zabbix-sql-scripts
+    update_cache: yes

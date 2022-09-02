@@ -1,0 +1,5 @@
+---
+- name: INSTALL ZABBIX RELEASE FOR REPO TASK
+  apt:
+#    deb: https://repo.zabbix.com/zabbix/6.2/debian/pool/main/z/zabbix-release/zabbix-release_6.2-1+debian11_all.deb
+    deb: https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-1%2Bubuntu22.04_all.deb

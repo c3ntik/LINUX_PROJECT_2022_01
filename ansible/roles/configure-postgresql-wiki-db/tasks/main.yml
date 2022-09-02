@@ -1,0 +1,2 @@
+---
+- import_tasks: configure-postgresql-wiki-db.yml

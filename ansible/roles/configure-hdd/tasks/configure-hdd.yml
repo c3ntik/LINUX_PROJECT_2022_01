@@ -1,0 +1,28 @@
+---
+- name: CREATE PARTITION VIA PARTED TASK
+  parted:
+    device: "{{ parted_device }}"
+    number: "{{ parted_number }}"
+    label: gpt
+    part_start: "0%"
+    part_end: "100%"
+    state: present
+
+- name: CREATE EXT4 FILESYSTEM ON {{ device }} TASK
+  filesystem:
+    fstype: ext4
+    device: "{{ device }}"
+
+- name: DISPLAY UUID
+  command: "blkid -s UUID -o value {{ device }}"
+  register: uuid_disk
+
+- name: ADD PARTITION PARAMETERS TO FSTAB TASK
+  blockinfile:
+   path: /etc/fstab
+   state: present
+   block: |
+      UUID={{ uuid_disk.stdout }}   {{ mount_dir }}   ext4   defaults,data=writeback,noatime,nodiratime,barrier=0 0 0
+
+- name: MOUNT PARTITION
+  command: 'mount -a'

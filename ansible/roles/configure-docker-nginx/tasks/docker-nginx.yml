@@ -1,0 +1,29 @@
+---
+- name: COPY NGINX COMPOSE FILE TASK
+  copy:
+    src: files/docker-compose-nginx.yml
+    dest: /opt/docker/docker-nginx/docker-compose.yml
+
+- name: COPY CONF NGINX FILE TASK
+  copy:
+    src: "{{ item }}"
+    dest: /opt/docker/docker-nginx/conf/
+  with_items:
+    - files/wiki.conf
+    - files/zabbix.conf
+
+- name: DOWNLOAD CRT TASK
+  get_url:
+    url: "{{ crt_url }}"
+    dest: /opt/docker/docker-nginx/ssl/loktionov.net.crt
+    mode: '0440'
+
+- name: DOWNLOAD KEY TASK
+  get_url:
+    url: "{{ key_url }}"
+    dest: /opt/docker/docker-nginx/ssl/loktionov.net.key
+    mode: '0440'
+
+- name: DEPLOY NGINX-DOCKER TASK
+  docker_compose:
+    project_src: /opt/docker/docker-nginx

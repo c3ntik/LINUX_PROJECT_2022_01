@@ -1,0 +1,8 @@
+---
+  - name: INSTALL DOCKER TASK
+    apt:
+      name:
+        - docker-ce
+        - docker-compose
+      state: latest
+      update_cache: yes

@@ -1,0 +1,7 @@
+---
+- import_tasks: wait-connection.yml
+- import_tasks: update-os.yml
+- import_tasks: install-soft.yml
+- import_tasks: set-timezone.yml
+- import_tasks: change-hosts.yml
+- import_tasks: configure-ssh.yml

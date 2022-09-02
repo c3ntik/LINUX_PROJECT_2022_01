@@ -1,0 +1,30 @@
+---
+- name: UPDATE DEAULT CONF FILE RSYSLOG-01 TASK 
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    state: present
+    regexp: '#module(load="imtcp")'
+    line: 'module(load="imtcp")'
+  
+- name: UPDATE DEAULT CONF FILE RSYSLOG-02 TASK 
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    state: present
+    regexp: '#input(type="imtcp" port="514")'
+    line: 'input(type="imtcp" port="514")'
+
+- name: COPY CONFIG FILES TASK
+  copy:
+    src: "{{ item }}"
+    dest: /etc/rsyslog.d/
+    owner: root
+    group: root
+    mode: '0644'
+  with_items: 
+    - ./files/50-default.conf
+    - ./files/60-server.conf
+
+- name: RESTART RSYSLOG SERVER TASK
+  systemd:
+    name: rsyslog
+    state: restarted

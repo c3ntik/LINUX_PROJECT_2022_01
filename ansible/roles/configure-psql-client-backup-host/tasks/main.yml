@@ -1,0 +1,4 @@
+---
+- import_tasks: repo-postgresql.yml
+- import_tasks: install-postgresql-client.yml
+- import_tasks: configure-postgresql-client.yml

@@ -1,0 +1,177 @@
+---
+#- name: WAIT 30 SEC TASK
+#  wait_for:
+#    timeout: 30
+
+- name: ADD GATE-HOST TASK
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://{{ ansible_host }}:8080
+    login_user: "{{ zabbix_web_user }}"
+    login_password: "{{ zabbix_web_password }}"
+    host_name: gate
+    host_groups:
+      - "LINUX_HOSTS"
+    link_templates:
+      - "Linux by Zabbix agent"
+      - "ICMP Ping"
+      - "SSH Service"
+    status: enabled
+    state: present
+    interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: "10.10.10.10"
+        dns: "gate"
+        port: "10050"
+  become: false 
+
+- name: ADD MON-HOST TASK
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://{{ ansible_host }}:8080
+    login_user: "{{ zabbix_web_user }}"
+    login_password: "{{ zabbix_web_password }}"
+    host_name: mon
+    host_groups:
+      - "LINUX_HOSTS"
+    link_templates:
+      - "Linux by Zabbix agent"
+      - "Zabbix server health"
+      - "Nginx by Zabbix agent"
+      - "ICMP Ping"
+      - "PostgreSQL by Zabbix agent 2"
+      - "SSH Service"
+    status: enabled
+    state: present
+    interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: "10.10.10.20"
+        dns: "mon"
+        port: "10050"
+  become: false
+
+- name: ADD LOG-HOST TASK
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://{{ ansible_host }}:8080
+    login_user: "{{ zabbix_web_user }}"
+    login_password: "{{ zabbix_web_password }}"
+    host_name: log
+    host_groups:
+      - "LINUX_HOSTS"
+    link_templates:
+      - "Linux by Zabbix agent"
+      - "ICMP Ping"
+      - "SSH Service"
+    status: enabled
+    state: present
+    interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: "10.10.10.30"
+        dns: "log"
+        port: "10050"
+  become: false
+
+- name: ADD BACKUP-HOST TASK
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://{{ ansible_host }}:8080
+    login_user: "{{ zabbix_web_user }}"
+    login_password: "{{ zabbix_web_password }}"
+    host_name: backup
+    host_groups:
+      - "LINUX_HOSTS"
+    link_templates:
+      - "Linux by Zabbix agent"
+      - "ICMP Ping"
+      - "SSH Service"
+    status: enabled
+    state: present
+    interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: "10.10.10.40"
+        dns: "backup"
+        port: "10050"
+  become: false
+
+- name: ADD WEB-HOST TASK
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://{{ ansible_host }}:8080
+    login_user: "{{ zabbix_web_user }}"
+    login_password: "{{ zabbix_web_password }}"
+    host_name: web
+    host_groups:
+      - "LINUX_HOSTS"
+    link_templates:
+      - "Linux by Zabbix agent"
+      - "ICMP Ping"
+      - "SSH Service"
+    status: enabled
+    state: present
+    interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: "10.10.10.50"
+        dns: "web"
+        port: "10050"
+  become: false
+
+- name: ADD SQL01-HOST TASK
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://{{ ansible_host }}:8080
+    login_user: "{{ zabbix_web_user }}"
+    login_password: "{{ zabbix_web_password }}"
+    host_name: sql01
+    host_groups:
+      - "LINUX_HOSTS"
+    link_templates:
+      - "Linux by Zabbix agent"
+      - "PostgreSQL by Zabbix agent 2"
+      - "ICMP Ping"
+      - "SSH Service"
+    status: enabled
+    state: present
+    interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: "10.10.10.61"
+        dns: "sql01"
+        port: "10050"
+  become: false
+
+- name: ADD SQL02-HOST TASK
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://{{ ansible_host }}:8080
+    login_user: "{{ zabbix_web_user }}"
+    login_password: "{{ zabbix_web_password }}"
+    host_name: sql02
+    host_groups:
+      - "LINUX_HOSTS"
+    link_templates:
+      - "Linux by Zabbix agent"
+      - "PostgreSQL by Zabbix agent 2"
+      - "ICMP Ping"
+      - "SSH Service"
+    status: enabled
+    state: present
+    interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: "10.10.10.62"
+        dns: "sql02"
+        port: "10050"
+  become: false

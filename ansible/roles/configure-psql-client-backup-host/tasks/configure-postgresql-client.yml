@@ -1,0 +1,8 @@
+---
+- name: COPY PGPASS TO ROOT USER HOME TASK
+  copy:
+    src: ./files/pgpass
+    dest: /root/.pgpass
+    mode: '0600'
+    owner: root
+    group: root

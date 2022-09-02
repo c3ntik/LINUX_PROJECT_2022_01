@@ -1,0 +1,7 @@
+---
+- name: INSTALL POSTGRESQL TASK
+  apt:
+    name: postgresql-14
+    state: present
+    update_cache: yes
+

@@ -1,0 +1,27 @@
+---
+- name: REMOVE SOFT TASK
+  apt:
+    name:
+      - apparmor
+      - ntp
+    state: absent
+
+- name: INSTALL SOFT TASK
+  apt:
+    name:
+      - mc
+      - iotop
+      - htop
+      - net-tools
+      - parted
+      - gnupg
+      - ca-certificates
+      - apt-transport-https
+      - wget
+      - curl
+      - chrony
+      - software-properties-common
+      - python3-psycopg2
+      - rsync
+    state: latest
+    update_cache: yes

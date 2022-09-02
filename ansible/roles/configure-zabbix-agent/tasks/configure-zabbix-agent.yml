@@ -1,0 +1,33 @@
+---
+- name: INSTALL ZABBIX AGENT2 TASK
+  apt:
+    name: zabbix-agent2
+    state: present
+    update_cache: yes
+
+- name: COPY CONFIG FILE TASK
+  copy:
+    src: "{{ item }}"
+    dest: /etc/zabbix/
+  with_items: 
+    - ./files/zabbix_agent2.conf
+
+- name: UPDATE UNIT FILE ZABBIX USER-ROOT TASK 
+  lineinfile:
+    dest: /lib/systemd/system/zabbix-agent2.service
+    state: present
+    regexp: 'User=zabbix'
+    line: "User=root"
+
+- name: UPDATE UNIT FILE ZABBIX GROUP-ROOT TASK 
+  lineinfile:
+    dest: /lib/systemd/system/zabbix-agent2.service
+    state: present
+    regexp: 'Group=zabbix'
+    line: "Group=root"
+
+- name: RESTART ZABBIX AGENT2 TASK
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: zabbix-agent2

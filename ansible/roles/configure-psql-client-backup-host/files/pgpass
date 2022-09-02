@@ -1,0 +1,7 @@
+localhost:*:*:postgres:postgres
+127.0.0.1:*:*:postgres:postgres
+10.10.10.20:*:*:postgres:postgres
+10.10.10.61:*:*:postgres:postgres
+10.10.10.62:*:*:postgres:postgres
+
+

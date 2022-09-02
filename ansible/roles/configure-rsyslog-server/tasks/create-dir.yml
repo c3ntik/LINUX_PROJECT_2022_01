@@ -1,0 +1,8 @@
+---
+- name: CREATE NGINX DOCKER DIRECTORIES TASK
+  file:
+    path: '{{ item }}'
+    state: directory
+    mode: '0777'
+  with_items:
+    - /opt/RSYSLOG_SERVER

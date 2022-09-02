@@ -1,0 +1,15 @@
+---
+- name: CREATE WIKI DB TASK
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: wiki
+
+- name: CREATE WIKI USER IN DB AND ADD GRANT TASK
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: wiki
+    name: wiki
+    password: wiki
+    priv: ALL

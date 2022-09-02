@@ -1,0 +1,6 @@
+---
+  - name: UPDATE PACKAGES TASK
+    apt:
+      name: "*"
+      state: latest
+      update_cache: yes

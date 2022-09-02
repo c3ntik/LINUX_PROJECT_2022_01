@@ -1,0 +1,17 @@
+---
+tf_project_path: ../../terraform
+tf_state: present
+tf_region_name: ru-central1-a
+docker_user: ubuntu
+parted_device: /dev/vdb
+parted_number: 1
+device: /dev/vdb1
+mount_dir: /opt
+os_name: jammy
+
+### CRT
+crt_url: <change_me> ###
+key_url: <change_me> ###
+
+zabbix_web_user: Admin
+zabbix_web_password: zabbix

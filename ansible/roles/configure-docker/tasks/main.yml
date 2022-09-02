@@ -1,0 +1,4 @@
+---
+- import_tasks: add-docker-repo.yml
+- import_tasks: install-docker.yml
+- import_tasks: docker-user.yml

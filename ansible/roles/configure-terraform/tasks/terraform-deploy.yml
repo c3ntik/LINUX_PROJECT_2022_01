@@ -1,0 +1,9 @@
+---
+  - name: TERRAFORM YC DEPLOY INFRASTRUCTURE TASK
+    terraform:
+      force_init: true
+      project_path: "{{ tf_project_path }}"
+      state: "{{ tf_state }}"
+
+  - name: GENERATE INV FILE TASK
+    meta: refresh_inventory

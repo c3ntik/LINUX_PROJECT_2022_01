@@ -1,0 +1,24 @@
+---
+- name: COPY MAIN CONFIG FILE TASK
+  copy:
+    src: ./files/rsyslog.conf
+    dest: /etc/rsyslog.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: COPY CONFIG FILES TASK
+  copy:
+    src: "{{ item }}"
+    dest: /etc/rsyslog.d/
+    owner: root
+    group: root
+    mode: '0644'
+  with_items: 
+    - ./files/50-default.conf
+    - ./files/60-client.conf
+
+- name: RESTART RSYSLOG CLIENT TASK
+  systemd:
+    name: rsyslog
+    state: restarted

@@ -1,0 +1,12 @@
+version: "3"
+services:
+  nginx:
+    container_name: nginx
+    image: 'nginx:latest'
+    restart: unless-stopped
+    ports:
+      - '443:443'
+    volumes:
+      - ./log:/var/log/nginx
+      - ./ssl:/ssl:ro
+      - ./conf:/etc/nginx/conf.d

@@ -1,0 +1,11 @@
+---
+- name: COPY WIKI COMPOSE FILE TASK
+  copy:
+    src: ./files/docker-compose-wiki.yml
+    dest: /opt/docker/docker-wiki/docker-compose.yml
+
+- name: DEPLOY WIKI-DOCKER TASK
+  docker_compose:
+    project_src: /opt/docker/docker-wiki
+
+

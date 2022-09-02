@@ -1,0 +1,12 @@
+---
+- name: CHANGE PARAMETERS SSH CONFIG TASK 
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: 'Subsystem	sftp	/usr/lib/openssh/sftp-server'
+    line: 'Subsystem	sftp	/usr/lib/openssh/sftp-server -u 006 -l VERBOSE -f LOCAL0'
+
+- name: RESTART SSH TASK
+  systemd:
+    name: sshd
+    state: restarted

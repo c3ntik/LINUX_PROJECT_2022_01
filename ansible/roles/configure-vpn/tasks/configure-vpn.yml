@@ -1,0 +1,10 @@
+---
+- name: WAIT 60 SEC FOR START OPENVPN SERVICE TASK
+  wait_for:
+    timeout: 60
+
+- name: COPY VPN PASS FILE TASK
+  fetch:
+    src: /root/default_passwords.txt
+    dest: ../../FILES/openvpn_password.txt
+    flat: yes

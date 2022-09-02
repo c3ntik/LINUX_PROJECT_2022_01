@@ -1,0 +1,3 @@
+---
+- import_tasks: add-zabbix-repo.yml
+- import_tasks: configure-zabbix-agent.yml

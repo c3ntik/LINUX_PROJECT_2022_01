@@ -1,0 +1,6 @@
+---
+  - name: WAIT CONNECTION TASK
+    wait_for_connection:
+
+  - name: GATHER FACTS FIRST TIME TASK
+    setup:

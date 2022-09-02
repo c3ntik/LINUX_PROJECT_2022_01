@@ -1,0 +1,7 @@
+---
+- name: INSTALL POSTGRESQL CLIENT TASK
+  apt:
+    name: postgresql-client-14
+    state: present
+    update_cache: yes
+

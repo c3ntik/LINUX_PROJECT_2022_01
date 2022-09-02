@@ -1,0 +1,44 @@
+---
+- name: STOP POSTGRESQL TASK
+  systemd:
+    name: postgresql
+    state: stopped
+
+- name: CHANGE PG_HBA.CONF TASK
+  blockinfile:
+    path: /etc/postgresql/14/main/pg_hba.conf
+    block: |
+      host    replication     repl            10.10.10.61/32            md5
+      host    replication     repl            10.10.10.62/32            md5
+      host    replication     all             10.10.10.61/32            md5
+      host    replication     all             10.10.10.62/32            md5
+
+- name: DEL POSTGRES FILES TASK
+  file:
+    path: /var/lib/postgresql/14/main
+    state: absent
+
+- name: MKDIR POSTGRES DATA DIR TASK
+  file:
+    path: /var/lib/postgresql/14/main
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: 0700
+
+- name: FIRST BASEBACKUP FOR REPLICA TASK
+  become_user: postgres
+  shell: PGPASSWORD=repl pg_basebackup -h 10.10.10.61 -U repl -D /var/lib/postgresql/14/main -v -P -R -c fast
+
+- name: CHANGE POSTGRESQL.CONF FOR REPL TASK
+  blockinfile:
+    path: /etc/postgresql/14/main/postgresql.conf
+    block: |
+      primary_conninfo = 'user=repl password=repl port=5432 host=10.10.10.61'
+      primary_slot_name = 'pg_slot_1'
+
+- name: START POSTGRESQL TASK
+  systemd:
+    name: postgresql
+    state: started
+

@@ -1,0 +1,67 @@
+---
+- name:  CHANGE NGINX.CONF-01 TASK
+  lineinfile:
+    dest: /etc/zabbix/nginx.conf
+    state: present
+    regexp: '#        listen          8080;'
+    line: "        listen          8080;"
+
+- name:  CHANGE NGINX.CONF-01 TASK
+  lineinfile:
+    dest: /etc/zabbix/nginx.conf
+    state: present
+    regexp: '#        server_name     example.com;'
+    line: "        server_name     mon;"
+
+- name: COPY CONFIG FILE ZABBIX-SERVER TASK
+  copy:
+    src: "{{ item }}"
+    dest: /etc/zabbix/zabbix_server.conf
+    owner: root
+    group: root
+    mode: '0600'
+  with_items: 
+    - ./files/zabbix_server.conf
+
+- name: COPY CONFIG FILE ZABBIX-WEB TASK
+  copy:
+    src: "{{ item }}"
+    dest: /etc/zabbix/web/zabbix.conf.php
+    owner: www-data
+    group: www-data
+    mode: '0600'
+  with_items: 
+    - ./files/zabbix.conf.php
+
+- name: CREATE DATABASE AND USER ZABBIX TASK
+  block:
+    - name: CREATE DATABASE ZABBIX TASK
+      community.postgresql.postgresql_db:
+        name: zabbix
+        port: 5432
+        state: present
+    - name: CREATE USER ZABBIX TASK
+      community.postgresql.postgresql_user:
+        db: zabbix
+        name: zabbix
+        password: zabbix
+        port: 5432
+        priv: ALL
+        state: present
+        encrypted: true
+  become: true
+  become_user: postgres
+
+- name: DEPLOY ZABBIX DUMP TASK
+  shell: |
+    zcat /usr/share/doc/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
+
+- name: RESTART NGINX TASK
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - nginx
+#    - php7.4-fpm
+    - php8.1-fpm
+    - zabbix-server

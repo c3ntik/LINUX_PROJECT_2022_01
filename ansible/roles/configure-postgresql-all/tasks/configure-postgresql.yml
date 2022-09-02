@@ -1,0 +1,45 @@
+---
+- name: STOP POSTGRESQL TASK
+  systemd:
+    name: postgresql
+    state: stopped
+
+- name: COPY CONFIG FILE TASK
+  copy:
+    src: "{{ item }}"
+    dest: /etc/postgresql/14/main
+    owner: postgres
+    group: postgres
+    mode: '0644'
+  with_items: 
+    - ./files/postgresql.conf
+    - ./files/pg_hba.conf
+
+- name: START POSTGRESQL TASK
+  systemd:
+    name: postgresql
+    state: started
+
+- name: CHANGE POSTGRES USER PASSWORD
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: postgres
+    name: postgres
+    password: "postgres"
+
+- name: COPY PGPASS TO UBUNTU USER HOME TASK
+  copy:
+    src: ./files/pgpass
+    dest: /home/ubuntu/.pgpass
+    mode: '0600'
+    owner: ubuntu
+    group: ubuntu
+
+- name: COPY PGPASS TO POSTGRES USER HOME TASK
+  copy:
+    src: ./files/pgpass
+    dest: /var/lib/postgresql/.pgpass
+    mode: '0600'
+    owner: postgres
+    group: postgres

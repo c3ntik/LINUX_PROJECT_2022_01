@@ -1,0 +1,4 @@
+---
+- import_tasks: install-zabbix-server.yml
+- import_tasks: configure-zabbix-server.yml
+- import_tasks: configure-zabbix-templates-and-hosts.yml

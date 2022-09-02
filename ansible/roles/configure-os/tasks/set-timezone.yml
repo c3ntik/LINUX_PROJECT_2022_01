@@ -1,0 +1,4 @@
+---
+  - name: SET TIMEZONE MOSCOW TASK
+    timezone:
+      name: Europe/Moscow

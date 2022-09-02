@@ -1,0 +1,13 @@
+---
+- name: ADD POSTGRESQL REPO KEY TASK
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: ADD POSTGRESQL REPO TASK
+  apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt {{ os_name }}-pgdg main
+    state: present
+
+
+

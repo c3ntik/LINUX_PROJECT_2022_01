@@ -1,0 +1,54 @@
+---
+- name:  ENABLE RSYNC IN CONFIG TASK
+  lineinfile:
+    dest: /etc/default/rsync
+    state: present
+    regexp: '^RSYNC_ENABLE=false'
+    line: "RSYNC_ENABLE=true"
+
+- name: COPY RSYNC.CONF TASK
+  copy:
+    src: files/rsyncd.conf
+    dest: /etc/rsyncd.conf
+    mode: '0644'
+    owner: root
+    group: root
+
+- name: RESTART RSYNC TASK
+  service:
+    name: rsync
+    enabled: yes
+    state: restarted
+
+- name: COPY RSYNC_BACKUP.sh TASK
+  copy:
+    src: ./files/RSYNC_BACKUP.sh
+    dest: /usr/local/bin/
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: COPY RSYNC_MIRROR.sh TASK
+  copy:
+    src: ./files/RSYNC_MIRROR.sh   
+    dest: /usr/local/bin/
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: CRON RSYNC_MIRROR.sh TASK
+  lineinfile:
+    path: /etc/crontab
+    state: present
+    line: '*/5 *	* * *	root	sh /usr/local/bin/RSYNC_MIRROR.sh'
+
+- name: CRON RSYNC_BACKUP.sh TASK
+  lineinfile:
+    path: /etc/crontab
+    state: present
+    line: '*/30 *	* * *	root	sh /usr/local/bin/RSYNC_BACKUP.sh'
+
+- name: RESTART CRON TASK
+  service:
+    name: cron
+    state: restarted
